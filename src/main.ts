@@ -39,7 +39,7 @@ function formatDatetimeToICS(datetime: string): string {
     return datetime.replace(/[-:]/g, '').replace('T', 'T').split('+')[0] + 'Z';
 }
 
-export function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextOutput {
+function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextOutput {
     const response = UrlFetchApp.fetch(NOTION_URL, OPTIONS);
     const data: List = JSON.parse(response.getContentText());
 
@@ -78,3 +78,5 @@ END:VEVENT
         .createTextOutput(icsText)
         .setMimeType(ContentService.MimeType.ICAL);
 }
+
+(globalThis as any).doGet = doGet;
