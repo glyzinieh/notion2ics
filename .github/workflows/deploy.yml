@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: node build.js
+        run: npm run build
 
       - name: Setup Clasp
         run: |
