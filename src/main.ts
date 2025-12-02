@@ -79,4 +79,5 @@ END:VEVENT
         .setMimeType(ContentService.MimeType.ICAL);
 }
 
-(globalThis as any).doGet = doGet;
+declare let global: any;
+global.doGet = doGet;
