@@ -21,12 +21,7 @@ const OPTIONS = {
                     {
                         or: [
                             { property: "オンライン", checkbox: { equals: false } },
-                            {
-                                and: [
-                                    { property: "オンライン", checkbox: { equals: true } },
-                                    { property: "完了", checkbox: { equals: false } }
-                                ]
-                            }
+                            { property: "完了", checkbox: { equals: false } }
                         ]
                     }
                 ]
@@ -40,8 +35,16 @@ function formatDatetimeToICS(datetime: string): string {
 }
 
 function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextOutput {
-    const response = UrlFetchApp.fetch(NOTION_URL, OPTIONS);
-    const data: List = JSON.parse(response.getContentText());
+    let data: List;
+    try {
+        const response = UrlFetchApp.fetch(NOTION_URL, OPTIONS);
+        data = JSON.parse(response.getContentText());
+    } catch (error) {
+        Logger.log('Error fetching data from Notion:', error);
+        return ContentService
+            .createTextOutput('Error fetching data from Notion')
+            .setMimeType(ContentService.MimeType.TEXT);
+    }
 
     let icsText = 'BEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN\n';
 
