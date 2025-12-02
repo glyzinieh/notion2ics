@@ -31,7 +31,8 @@ const OPTIONS = {
 };
 
 function formatDatetimeToICS(datetime: string): string {
-    return datetime.replace(/[-:]/g, '').replace('T', 'T').split('+')[0] + 'Z';
+    // YYYYMMDDTHHMMSS形式に変換
+    return datetime.replace(/[-:]/g, '').split('.')[0];
 }
 
 function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextOutput {
@@ -68,8 +69,8 @@ function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextO
 UID:${item.id}
 SUMMARY:${name}
 DTSTAMP:${dtStamp}
-DTSTART:${dtStart}
-DTEND:${dtEnd}
+DTSTART;TZID=Asia/Tokyo:${dtStart}
+DTEND;TZID=Asia/Tokyo:${dtEnd}
 DESCRIPTION:${item.url}
 END:VEVENT
 `;
