@@ -47,7 +47,7 @@ function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextO
             .setMimeType(ContentService.MimeType.TEXT);
     }
 
-    let icsText = 'BEGIN:VCALENDAR\nVERSION:2.0\nCALSCALE:GREGORIAN\n';
+    let icsText = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:~//glyzinieh//notion2ics\n';
 
     data.results.forEach(item => {
         const props = item.properties;
@@ -63,10 +63,10 @@ function doGet(e: GoogleAppsScript.Events.DoGet): GoogleAppsScript.Content.TextO
 
         const dtStart = formatDatetimeToICS(datetime_start);
         const dtEnd = formatDatetimeToICS(datetime_end);
-        const dtStamp = formatDatetimeToICS(item.created_time);
+        const dtStamp = formatDatetimeToICS(item.last_edited_time);
         icsText +=
             `BEGIN:VEVENT
-UID:${item.id}
+UID:${item.id}.aoba-ds.haruhiko@glyzinie.me
 SUMMARY:${name}
 DTSTAMP:${dtStamp}
 DTSTART;TZID=Asia/Tokyo:${dtStart}
