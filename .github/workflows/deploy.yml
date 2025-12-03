@@ -37,7 +37,7 @@ jobs:
         id: get-deployment
         run: |
           DEPLOYMENTS=$(clasp list-deployments)
-          LATEST_ID=$(echo "$DEPLOYMENTS" | grep -oP '@\K\d+' | head -1)
+          LATEST_ID=$(echo "$DEPLOYMENTS" | grep -v '@HEAD' | grep -oP '- \K[^\s]+' | head -1)
           echo "deployment_id=$LATEST_ID" >> $GITHUB_OUTPUT
 
       - name: Update or create deployment
